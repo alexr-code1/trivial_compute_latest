@@ -8,6 +8,31 @@ def highlight_cell(row, col, color):
     y2 = y1 + 300 / 9
     canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="")
 
+# Function to add text to a specific box
+def add_text(row, col, text):
+    x = 50 + (col - 0.5) * 300 / 9
+    y = 50 + (row - 0.5) * 300 / 9
+    cell_size = 300 / 9
+    desired_text_size = cell_size * 0.95
+
+    # Calculate the maximum font size that fits the desired percentage of the cell size
+    max_font_size = 30
+    font = ("Arial", max_font_size)
+    text_width = canvas.create_text(0, 0, text=text, font=font, anchor="center", tags="temp_text")
+    bbox = canvas.bbox(text_width)
+    while bbox[2] - bbox[0] > desired_text_size or bbox[3] - bbox[1] > desired_text_size:
+        max_font_size -= 1
+        font = ("Arial", max_font_size)
+        canvas.delete("temp_text")
+        text_width = canvas.create_text(0, 0, text=text, font=font, anchor="center", tags="temp_text")
+        bbox = canvas.bbox(text_width)
+
+    # Remove the temporary text
+    canvas.delete("temp_text")
+
+    # Create the text with the adjusted font size
+    canvas.create_text(x, y, text=text, font=font)
+
 # Create a new window
 window = tk.Tk()
 
@@ -70,6 +95,19 @@ highlight_cell(8, 1, "blue")  # H1
 highlight_cell(8, 9, "blue")  # H9
 highlight_cell(9, 5, "blue")  # I5
 
+# Add text to specific cells
+add_text(1, 5, "HQ")
+add_text(5, 1, "HQ")
+add_text(5, 9, "HQ")
+add_text(9, 5, "HQ")
+
+# Add text to specific cells with black color
+add_text(1, 1, "Roll Again")
+add_text(1, 9, "Roll Again")
+add_text(5, 5, "Trivial Compute")
+add_text(9, 1, "Roll Again")
+add_text(9, 9, "Roll Again")
+
 # Remove specific cells
 remove_cells = [(2, 2), (2, 3), (2, 4), (2, 6), (2, 7), (2, 8),
                 (3, 2), (3, 3), (3, 4), (3, 6), (3, 7), (3, 8),
@@ -80,11 +118,11 @@ remove_cells = [(2, 2), (2, 3), (2, 4), (2, 6), (2, 7), (2, 8),
 
 for cell in remove_cells:
     row, col = cell
-    x1 = 50 + (col - 1) * 300 / 9
-    y1 = 50 + (row - 1) * 300 / 9
-    x2 = x1 + 300 / 9
-    y2 = y1 + 300 / 9
-    canvas.create_rectangle(x1, y1, x2, y2, fill="white", outline="")
+    x = 50 + (col - 1) * 300 / 9
+    y = 50 + (row - 1) * 300 / 9
+    x2 = x + 300 / 9
+    y2 = y + 300 / 9
+    canvas.create_rectangle(x, y, x2, y2, fill="white", outline="")
 
 # Start the main event loop
 window.mainloop()
