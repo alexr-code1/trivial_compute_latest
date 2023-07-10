@@ -6,7 +6,7 @@ def highlight_cell(row, col, color):
     y1 = 50 + (row - 1) * 300 / 9
     x2 = x1 + 300 / 9
     y2 = y1 + 300 / 9
-    canvas.create_rectangle(x1, y1, x2, y2, fill=color)
+    canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="")
 
 # Create a new window
 window = tk.Tk()
@@ -14,17 +14,6 @@ window = tk.Tk()
 # Create a canvas to draw the board
 canvas = tk.Canvas(window, width=400, height=400)
 canvas.pack()
-
-# Draw the outline of the board
-canvas.create_rectangle(50, 50, 350, 350, width=2)
-
-# Draw horizontal lines
-for i in range(1, 9):
-    canvas.create_line(50, 50 + i * 300 / 9, 350, 50 + i * 300 / 9, width=2)
-
-# Draw vertical lines
-for i in range(1, 9):
-    canvas.create_line(50 + i * 300 / 9, 50, 50 + i * 300 / 9, 350, width=2)
 
 # Highlight specific cells in red
 highlight_cell(1, 5, "red")  # A5
@@ -80,6 +69,22 @@ highlight_cell(5, 6, "blue")  # E6
 highlight_cell(8, 1, "blue")  # H1
 highlight_cell(8, 9, "blue")  # H9
 highlight_cell(9, 5, "blue")  # I5
+
+# Remove specific cells
+remove_cells = [(2, 2), (2, 3), (2, 4), (2, 6), (2, 7), (2, 8),
+                (3, 2), (3, 3), (3, 4), (3, 6), (3, 7), (3, 8),
+                (4, 2), (4, 3), (4, 4), (4, 6), (4, 7), (4, 8),
+                (6, 2), (6, 3), (6, 4), (6, 6), (6, 7), (6, 8),
+                (7, 2), (7, 3), (7, 4), (7, 6), (7, 7), (7, 8),
+                (8, 2), (8, 3), (8, 4), (8, 6), (8, 7), (8, 8)]
+
+for cell in remove_cells:
+    row, col = cell
+    x1 = 50 + (col - 1) * 300 / 9
+    y1 = 50 + (row - 1) * 300 / 9
+    x2 = x1 + 300 / 9
+    y2 = y1 + 300 / 9
+    canvas.create_rectangle(x1, y1, x2, y2, fill="white", outline="")
 
 # Start the main event loop
 window.mainloop()
