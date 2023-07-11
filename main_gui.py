@@ -37,7 +37,7 @@ def add_text(row, col, text):
 window = tk.Tk()
 
 # Create a canvas to draw the board
-canvas = tk.Canvas(window, width=400, height=400)
+canvas = tk.Canvas(window, width=600, height=400)
 canvas.pack()
 
 # Highlight specific cells in red
@@ -123,6 +123,22 @@ for cell in remove_cells:
     x2 = x + 300 / 9
     y2 = y + 300 / 9
     canvas.create_rectangle(x, y, x2, y2, fill="white", outline="")
+
+# Add small boxes 25% away from the main grid
+small_box_size = 75
+small_box_x1 = 425
+small_box_y1 = 100
+small_box_x2 = small_box_x1 + small_box_size
+small_box_y2 = small_box_y1 + small_box_size
+
+canvas.create_rectangle(small_box_x1, small_box_y1, small_box_x2, small_box_y2, fill="white", outline="black")
+
+small_box_x1 = 425
+small_box_y1 = 225
+small_box_x2 = small_box_x1 + small_box_size
+small_box_y2 = small_box_y1 + small_box_size
+
+canvas.create_rectangle(small_box_x1, small_box_y1, small_box_x2, small_box_y2, fill="white", outline="black")
 
 # Start the main event loop
 window.mainloop()
