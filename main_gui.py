@@ -1,4 +1,5 @@
 import tkinter as tk
+import random
 
 # Function to highlight a cell in a specified color
 def highlight_cell(row, col, color):
@@ -32,6 +33,11 @@ def add_text(row, col, text):
 
     # Create the text with the adjusted font size
     canvas.create_text(x, y, text=text, font=font)
+
+# Function to roll the dice
+def roll_dice():
+    number = random.randint(1, 6)
+    roll_result.config(text=f"Dice Rolled: {number}")  # Update the roll result label
 
 # Create a new window
 window = tk.Tk()
@@ -139,6 +145,18 @@ small_box_x2 = small_box_x1 + small_box_size
 small_box_y2 = small_box_y1 + small_box_size
 
 canvas.create_rectangle(small_box_x1, small_box_y1, small_box_x2, small_box_y2, fill="white", outline="black")
+
+# Create a label to display roll result
+roll_result = tk.Label(window, text="Roll Result", font=("Arial", 16))
+roll_result.pack(pady=10)
+
+# Function to handle roll dice button click
+def roll_dice_click():
+    roll_dice()
+
+# Create a button to roll the dice
+roll_button = tk.Button(window, text="Roll Dice", font=("Arial", 14), command=roll_dice_click)
+roll_button.pack(pady=10)
 
 # Start the main event loop
 window.mainloop()
